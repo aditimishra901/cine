@@ -5,7 +5,10 @@ const userRoute = require("./routes/user");
 const adminRoute = require("./routes/admin");
 const questionRoute = require("./routes/question");
 const allRoute = require("./routes/getAllQuestions");
-const SubmitQuestion = require('./routes/submitQuestion')
+const SubmitQuestion = require('./routes/submitQuestion');
+const loginRoute = require("./routes/login");
+const jwt = require('jsonwebtoken');
+const {verifyToken} = require("./routes/verifytoken");
 const app = express();
 
 mongoose
@@ -20,10 +23,16 @@ mongoose
 //Middleware
 app.use(express.json());
 app.use("/api/users", userRoute);
-app.use("/api/questions", questionRoute);
+app.use("/api/questions",  questionRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/candidate", allRoute);
-app.use("/api/submit",SubmitQuestion)
+app.use("/api/submit",SubmitQuestion);
+app.use("/api/login",loginRoute);
+
+
+// app.get("/testing", verifyToken, (req,res) => {
+//   res.json("authenticated");
+// })
 
 let port = process.env.PORT;
 if (port == null || port == "") {
